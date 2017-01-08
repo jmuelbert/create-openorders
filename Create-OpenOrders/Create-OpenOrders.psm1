@@ -25,12 +25,12 @@
 # Gesamt
 # Auftragswert bereits geliefert
 
-function _Create-OpenOrders {
+function Create-OpenOrders {
 
     [CmdletBinding(DefaultParameterSetName='DefaultParameterSet',
                 SupportsShouldProcess=$true,
                 PositionalBinding=$false,
-                HelpUri='https://github.com/jmuelbert/createopenorders#help',
+                HelpUri='https://github.com/jmuelbert/create-openorders#help',
                 ConfirmImpact='Medium')]
     Param(
         # Parameter users - users in the excelfile
@@ -66,17 +66,18 @@ function _Create-OpenOrders {
         throw "Path to the Output Directory $($outputPath) is invalid. Please supply a valid Path"
     }
 
+    # Get the usernames for the Report (excelfiles)
     $beraters = import-csv $usersFile
-    $beraters | ft
     
-    $c = Import-Excel '.\OffeneAufträge.xlsx' -HeaderRow 7
+    # Get the Exceltable (Data)
+    $c = Import-Excel $dataFile -HeaderRow 7
 
     ForEach ($berater in $beraters) {
         $fileName = '.\' + $berater.Name + '.xlsx'
+        $pathAndFile = Convert-Path -Path $outputPath + "/" + $fileName
         $c | select 'AuftragNr.', 'Auftragsdatum', 'TageOffen', 'Deb.-Nr.', 'Deb.-Name',  'Berater', 'Arbeitswert', 'Teile', 'Fremdleistung', 'Andere', 'Gesamt', 'Auftragswert bereits geliefert' | 
-        Where-Object { $_.'Berater' -like $berater.Match } | Export-Excel -Path $fileName 
+        Where-Object { $_.'Berater' -like $berater.Match } | Export-Excel -Path $pathAndFile 
     }
 }
 
 
-_Create-OpenOrders -usersFile berater.csv -dataFile openorders.xlsx

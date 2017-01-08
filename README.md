@@ -6,7 +6,7 @@
     - powershell Excel-Import
 
 ## Usage
- - yo swift shows a wizard for generating a new swift app or library
+ - Create-OpenOrders -usersFile berater.csv -dataFile openorders.xlsx
 
         
 ## License
