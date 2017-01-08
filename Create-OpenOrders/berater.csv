@@ -1,0 +1,3 @@
+Name,Match,Anrede
+"Winzig", "*Winz*", "Hallo Winzig"
+"Hurtig", "*Hurt*", "Hallo Harry"
