@@ -74,10 +74,11 @@ function Create-OpenOrders {
 
     ForEach ($berater in $beraters) {
         $fileName = '.\' + $berater.Name + '.xlsx'
-        $pathAndFile = Convert-Path -Path $outputPath + "/" + $fileName
-        $c | select 'AuftragNr.', 'Auftragsdatum', 'TageOffen', 'Deb.-Nr.', 'Deb.-Name',  'Berater', 'Arbeitswert', 'Teile', 'Fremdleistung', 'Andere', 'Gesamt', 'Auftragswert bereits geliefert' | 
-        Where-Object { $_.'Berater' -like $berater.Match } | Export-Excel -Path $pathAndFile 
+        $pathAndFile = $outputPath + "\" + $fileName
+        $c | select 'Auftrag Nr.', 'Auftragsdatum', 'Tage offen', 'Deb.-Nr.', 'Deb.-Name', 'Berater', 'Arbeitswert', 'Teile', 'Fremdleistung', 'Andere', 'Gesamt', 'Bereits geliefert' | 
+        Where-Object { $_.'Berater' -like $berater.Match } | Export-Excel -AutoFilter -AutoSize -Path $pathAndFile
     }
 }
 
 
+Create-OpenOrders -usersFile berater.csv -dataFile Aufträge.xlsx -outputPath out
