@@ -1,9 +1,15 @@
 # create-openorders [powershell]
-
+    Create from a Collection of Data extractions for salespersons.
+    This will be saved in a extra excelfile for each salesperson.
 ## Getting Started
  - Dependencies
     - powershell 
-    - powershell Excel-Import
+    - powershell [Excel-Import](https://github.com/dfinke/ImportExcel)
+
+### Excel-Import
+    The beste way to use this is install with powershell.
+    Use the Command: `Install-Module -Name ImportExcel -Scope CurrentUser`
+
 
 ## Usage
  - Create-OpenOrders -usersFile berater.csv -dataFile openorders.xlsx
@@ -15,11 +21,3 @@ EUPL-V1.0 © [Jürgen Mülbert](https:/github.com/jmuelbert/create-openorders)
 
 [Return to top](#top)
 
-[npm-image]: https://badge.fury.io/js/generator-swift.svg
-[npm-url]: https://npmjs.org/package/generator-swift
-[travis-image]: https://travis-ci.org/jmuelbert/generator-swift.svg?branch=master
-[travis-url]: https://travis-ci.org/jmuelbert/generator-swift
-[daviddm-image]: https://david-dm.org/jmuelbert/generator-swift.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/jmuelbert/generator-swift
-[coveralls-image]: https://coveralls.io/repos/jmuelbert/generator-swift/badge.svg
-[coveralls-url]: https://coveralls.io/r/jmuelbert/generator-swift
