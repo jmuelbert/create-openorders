@@ -11,19 +11,19 @@
 #>
 # Create_OpenOrders.ps1
 #
-# Auftrag Nr.
-# Hauptbereich
-# Auftragsdatum
-# Tage offen
-# Deb.-Nr.
-# Deb.-Name
-# Verkäufer Serviceberater
-# Arbeitswert
-# Teile
-# Fremdleistung
-# Andere
-# Gesamt
-# Auftragswert bereits geliefert
+# A = Auftrag Nr.
+# B = Hauptbereich
+# C = Auftragsdatum
+# D = Tage offen
+# E = Deb.-Nr.
+# F = Deb.-Name
+# G = Verkäufer Serviceberater
+# H = Arbeitswert
+# I = Teile
+# J = Fremdleistung
+# K = Andere
+# L = Gesamt
+# M = Auftragswert bereits geliefert
 
 function Create-OpenOrders {
 
@@ -71,12 +71,22 @@ function Create-OpenOrders {
     
     # Get the Exceltable (Data)
     $c = Import-Excel $dataFile -HeaderRow 7
+    <#
+     $ws = $c.Workbook.WorkSheets[0]
+    $ws.Cells["C1"].Value = "TageOffen"
+    $ws.Cells["F1"].Value = "Berater"
+    #>
 
     ForEach ($berater in $beraters) {
         $fileName = '.\' + $berater.Name + '.xlsx'
         $pathAndFile = $outputPath + "\" + $fileName
+<<<<<<< HEAD
         $c | select 'Auftrag Nr.', 'Auftragsdatum', 'Tage offen', 'Deb.-Nr.', 'Deb.-Name', 'Berater', 'Arbeitswert', 'Teile', 'Fremdleistung', 'Andere', 'Gesamt', 'Bereits geliefert' | 
         Where-Object { $_.'Berater' -like $berater.Match } | Export-Excel -AutoFilter -AutoSize -Path $pathAndFile
+=======
+        $c | Select-Object 'AuftragNr.', 'Auftragsdatum', 'TageOffen', 'Deb.-Nr.', 'Deb.-Name',  'Berater', 'Arbeitswert', 'Teile', 'Fremdleistung', 'Andere', 'Gesamt', 'Auftragswert bereits geliefert' | 
+        Where-Object { $_.'Berater' -like $berater.Match } | Export-Excel -AutoSize -AutoFilter -Path $pathAndFile 
+>>>>>>> master
     }
 }
 
