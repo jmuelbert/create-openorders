@@ -17,7 +17,7 @@
         
 ## License
 
-EUPL-V1.0 © [Jürgen Mülbert](https:/github.com/jmuelbert/create-openorders)
+EUPL-V1.1 © [Jürgen Mülbert](https:/github.com/jmuelbert/create-openorders)
 
 [Return to top](#top)
 
