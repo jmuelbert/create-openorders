@@ -71,36 +71,19 @@ function Create-OpenOrders {
     
     # Get the Exceltable (Data)
     $c = Import-Excel $dataFile -HeaderRow 7
-    $ws = $c.Workbook.WorkSheets[1]
+    <#
+     $ws = $c.Workbook.WorkSheets[0]
     $ws.Cells["C1"].Value = "TageOffen"
     $ws.Cells["F1"].Value = "Berater"
-
+    #>
 
     ForEach ($berater in $beraters) {
         $fileName = '.\' + $berater.Name + '.xlsx'
-        $pathAndFile = Convert-Path -Path $outputPath + "/" + $fileName
-        $ws | Select-Object 'AuftragNr.', 'Auftragsdatum', 'TageOffen', 'Deb.-Nr.', 'Deb.-Name',  'Berater', 'Arbeitswert', 'Teile', 'Fremdleistung', 'Andere', 'Gesamt', 'Auftragswert bereits geliefert' | 
-        Where-Object { $_.'Berater' -like $berater.Match } | Export-Excel -AutoSize -AutoFilter -AutoNameRange 
-         -NumberFormat "0.#0;-0.#0" 
-         -DateFormat "dd.MM.yyyy"
-         -Path $pathAndFile {
-            param(
-                $workSheet,
-                $totalRows,
-                $lastColumn
-            )
-
-            Set-CellStyle $workSheet 1 $lastColumn Solid Cyan
-
-            foreach ($row in (2..$totalRows | Where-Object( {$_ % 2 -eq 0}))) {
-                Set-CellStyle $workSheet $row $lastColumn Solid Gray
-            }
-
-            foreach ($row in (2..$totalRows | Where-Object( {$_ % 2 -eq 1}))) {
-                Set-CellStyle $workSheet $row $lastColumn Solid LightGray
-            }
-        } 
+        $pathAndFile = $outputPath + "\" + $fileName
+        $c | Select-Object 'AuftragNr.', 'Auftragsdatum', 'TageOffen', 'Deb.-Nr.', 'Deb.-Name',  'Berater', 'Arbeitswert', 'Teile', 'Fremdleistung', 'Andere', 'Gesamt', 'Auftragswert bereits geliefert' | 
+        Where-Object { $_.'Berater' -like $berater.Match } | Export-Excel -AutoSize -AutoFilter -Path $pathAndFile 
     }
 }
 
 
+Create-OpenOrders -usersFile berater.csv -dataFile Aufträge.xlsx -outputPath out
