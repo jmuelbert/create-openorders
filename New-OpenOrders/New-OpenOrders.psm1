@@ -9,7 +9,7 @@
 .ROLE
 .FUNCTIONALITY
 #>
-# Create_OpenOrders.ps1
+# New-OpenOrders.ps1
 #
 # A = Auftrag Nr.
 # B = Hauptbereich
@@ -25,7 +25,7 @@
 # L = Gesamt
 # M = Auftragswert bereits geliefert
 
-function Create-OpenOrders {
+function New-OpenOrders {
 
     [CmdletBinding(DefaultParameterSetName='DefaultParameterSet',
                 SupportsShouldProcess=$true,
@@ -86,4 +86,4 @@ function Create-OpenOrders {
 }
 
 
-Create-OpenOrders -usersFile berater.csv -dataFile Auftr�ge.xlsx -outputPath out
+New-OpenOrders -usersFile berater.csv -dataFile Auftr�ge.xlsx -outputPath out
