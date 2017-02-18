@@ -66,24 +66,47 @@ function New-OpenOrders {
         throw "Path to the Output Directory $($outputPath) is invalid. Please supply a valid Path"
     }
 
-    # Get the usernames for the Report (excelfiles)
+  # Get the usernames for the Report (excelfiles)
     $beraters = import-csv $usersFile
     
-    # Get the Exceltable (Data)
-    $c = Import-Excel $dataFile -HeaderRow 7
-    <#
-     $ws = $c.Workbook.WorkSheets[0]
-    $ws.Cells["C1"].Value = "TageOffen"
-    $ws.Cells["F1"].Value = "Berater"
-    #>
+    # Get the Exceltable (Data
+    $csv = Import-Excel $dataFile -HeaderRow 7
+
+    $xlPkg = Import-Excel $dataFile -HeaderRow 7 | Export-Excel -Path temp.xlsx -PassThru
+
+    $ws = $xlPkg.Workbook.WorkSheets[1]
+
+    $ws.Cells["A1"].Value = "Auftragnummer"
+    $ws.Cells["B1"].Value = "Hauptbereich"
+    $ws.Cells["C1"].Value = "Auftragdatum"
+    $ws.Cells["D1"].Value = "Tage_offen"
+    $ws.Cells["E1"].Value = "Kundennummer"
+    $ws.Cells["F1"].Value = "Kundenname"
+    $ws.Cells["G1"].Value = "Berater"
+    $ws.Cells["H1"].Value = "Arbeit"
+    $ws.Cells["I1"].Value = "Teile"
+    $ws.Cells["J1"].Value = "Fremdleistung"
+    $ws.Cells["K1"].Value = "Andere"
+    $ws.Cells["L1"].Value = "Gesamt"
+    $ws.Cells["M1"].Value = "Geliefert"
+ 
+    
+
+    $ws.Cells.AutoFitColumns()
+
+    $xlPkg.Save()
+    $xlPkg.Dispose()
+
+    $c = Import-Excel temp.xslx
 
     ForEach ($berater in $beraters) {
         $fileName = '.\' + $berater.Name + '.xlsx'
         $pathAndFile = $outputPath + "\" + $fileName
-        $c | Select-Object 'AuftragNr.', 'Auftragsdatum', 'TageOffen', 'Deb.-Nr.', 'Deb.-Name',  'Berater', 'Arbeitswert', 'Teile', 'Fremdleistung', 'Andere', 'Gesamt', 'Auftragswert bereits geliefert' | 
-        Where-Object { $_.'Berater' -like $berater.Match } | Export-Excel -AutoSize -AutoFilter -Path $pathAndFile 
+
+        $c | Select-Object 'Auftragnummer', 'Auftragdatum', 'Tage_offen', 'Kundennummer', 'Kundenname',  'Berater', 'Arbeitswert', 'Teile', 'Fremdleistung', 'Andere', 'Gesamt', 'Geliefert' | 
+        Where-Object { $_.'Berater' -like $berater.Match } | Export-Excel -path $pathandFile -AutoSize -AutoFilter -StartRow 1 -TableStyle Medium5 -Numberformat "#.##" 
     }
 }
 
 
-New-OpenOrders -usersFile berater.csv -dataFile Auftr�ge.xlsx -outputPath out
+New-OpenOrders -usersFile berater.csv -dataFile Aufträge-20170129.xlsx  -outputPath out
