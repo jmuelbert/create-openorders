@@ -71,7 +71,6 @@ function Create-OpenOrders {
     
     # Get the Exceltable (Data
     $csv = Import-Excel $dataFile -HeaderRow 7
-    $csv | FT
 
     $xlPkg = Import-Excel $dataFile -HeaderRow 7 | Export-Excel -Path temp.xlsx -PassThru
 
@@ -95,17 +94,18 @@ function Create-OpenOrders {
 
     $ws.Cells.AutoFitColumns()
 
+
     $xlPkg.Save()
     $xlPkg.Dispose()
 
-    $c = Import-Excel temp.xslx
-
+    $c = Import-Excel temp.xlsx
     ForEach ($berater in $beraters) {
-        $fileName = '.\' + $berater.Name + '.xlsx'
+        $fileName = '.\' + $berater.Name + '.csv'
         $pathAndFile = $outputPath + "\" + $fileName
 
         $c | Select-Object 'Auftragnummer', 'Auftragdatum', 'Tage_offen', 'Kundennummer', 'Kundenname',  'Berater', 'Arbeitswert', 'Teile', 'Fremdleistung', 'Andere', 'Gesamt', 'Geliefert' | 
-        Where-Object { $_.'Berater' -like $berater.Match } | Export-Excel -path $pathandFile -AutoSize -AutoFilter -StartRow 1 -TableStyle Medium5 -Numberformat "#.##" 
+        Where-Object { $_.'Berater' -like $berater.Match } |Export-Csv $pathAndFile      
+    
     }
 }
 
