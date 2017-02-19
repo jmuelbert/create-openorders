@@ -20,18 +20,6 @@
    Die Rolle, zu der dieses Cmdlet gehört
 .FUNCTIONALITY
    Die Funktionalität, die dieses Cmdlet am besten beschreibt
-#>
-<#
-.Synopsis
-.Description
-.EXAMPLE
-.INPUTS
-.OUTPUTS
-.NOTES
-.COMPONENT
-.ROLE
-.FUNCTIONALITY
-#>
 # Create_OpenOrders.ps1
 #
 # A = Auftrag Nr.
@@ -47,8 +35,9 @@
 # K = Andere
 # L = Gesamt
 # M = Auftragswert bereits geliefert
+#>
 
-function Create-OpenOrders {
+function New-OpenOrders {
 
     [CmdletBinding(DefaultParameterSetName='DefaultParameterSet',
                 SupportsShouldProcess=$true,
@@ -137,7 +126,7 @@ function Create-OpenOrders {
                 $pathAndFile = $outputPath + "\" + $fileName
 
                 $c | Select-Object 'Auftragnummer', 'Auftragdatum', 'Tage_offen', 'Kundennummer', 'Kundenname',  'Berater', 'Arbeitswert', 'Teile', 'Fremdleistung', 'Andere', 'Gesamt', 'Geliefert' | 
-                Where-Object { $_.'Berater' -like $berater.Match } |Export-Csv $pathAndFile      
+                Where-Object { $_.'Berater' -like $berater.Match } | Export-Csv $pathAndFile      
     
             }
         }
@@ -150,4 +139,4 @@ function Create-OpenOrders {
 }
 
 
-Create-OpenOrders -usersFile berater.csv -dataFile Aufträge-20170129.xlsx  -outputPath out
+New-OpenOrders -usersFile berater.csv -dataFile Aufträge-20170129.xlsx  -outputPath out

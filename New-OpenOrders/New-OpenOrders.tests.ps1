@@ -4,7 +4,7 @@
 # You can download Pester from http://go.microsoft.com/fwlink/?LinkID=534084
 #
 
-Describe "Create-OpenOrders" {
+Describe "New-OpenOrders" {
 	Context "Function Exists" {
 		It "Should Return" {
 		
