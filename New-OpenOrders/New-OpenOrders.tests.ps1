@@ -1,13 +1,20 @@
-#
-# This is a PowerShell Unit Test file.
-# You need a unit test framework such as Pester to run PowerShell Unit tests. 
-# You can download Pester from http://go.microsoft.com/fwlink/?LinkID=534084
-#
+﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
+$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
+. "$here${directorySeparatorChar}$sut"
+
+function Get-Tempdir() {
+    $TempName = New-TemporaryFile
+    $outDir = Split-Path -Path $TempName
+    $fileName = Split-Path -Leaf $TempName
+    $dirName = $fileName.Split(".")
+    $outPath = $outDir + "\" + $dirName[0]
+    New-Item $outPath -type Directory
+    Write-Log "The XLSX where generated in : $OutPath"
+    return $outPath
+}
 
 Describe "New-OpenOrders" {
-	Context "Function Exists" {
-		It "Should Return" {
-		
-		}
-	}
+    It "New-OpenOrders-full" {
+        New-OpenOrders -usersfile berater.csv -datafile Data.xslx -outputPath Get-Tempdir
+    }
 }
