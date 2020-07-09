@@ -1,4 +1,7 @@
 # New-OpenOrders [powershell]
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2f3e8a4cd15041b58bc97b87295a3a77)](https://app.codacy.com/manual/jmuelbert/create-openorders?utm_source=github.com&utm_medium=referral&utm_content=jmuelbert/create-openorders&utm_campaign=Badge_Grade_Dashboard)
+
 Create from a Collection of Data extractions for salespersons.
 This will be saved in a extra excelfile for each salesperson.
 
