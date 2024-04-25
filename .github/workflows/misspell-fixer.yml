@@ -7,7 +7,7 @@ name: "Misspell fixer"
 
 on: # yamllint disable-line rule:truthy
   push:
-    branches: [main, develop, release, improve_workflows]
+    branches: [main, develop, release]
 
   pull_request:
     # The branches below must be a subset of the branches above
